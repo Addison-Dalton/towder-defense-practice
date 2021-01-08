@@ -12,9 +12,10 @@ public class GameBoard : MonoBehaviour {
 
   Vector2Int size;
   Queue<GameTile> searchFrontier = new Queue<GameTile>();
-
-  public void Initialize(Vector2Int size) {
+  GameTileContentFactory contentFactory;
+  public void Initialize(Vector2Int size, GameTileContentFactory contentFactory) {
     this.size = size;
+    this.contentFactory = contentFactory;
     ground.localScale = new Vector3(size.x, size.y, 1f);
 
     Vector2 offset = new Vector2((size.x - 1) * 0.5f, (size.y - 1) * 0.5f);
@@ -34,19 +35,31 @@ public class GameBoard : MonoBehaviour {
         if ((y & 1) == 0) {
           tile.IsAlternative = !tile.IsAlternative;
         }
+
+        tile.Content = contentFactory.Get(GameTileContentType.Empty);
       }
     }
-    FindPaths();
+    ToggleDestination(tiles[tiles.Length / 2]);
   }
 
-  private void FindPaths () {
+  private bool FindPaths () {
+    foreach (GameTile tile in tiles) {
+      if (!tile.HasPath) {
+        return false;
+      }
+    }
     // clear all paths
     foreach (GameTile tile in tiles) {
-      tile.ClearPath();
+      if (tile.Content.Type == GameTileContentType.Destination) {
+        tile.BecomeDestination();
+        searchFrontier.Enqueue(tile);
+      } else {
+        tile.ClearPath();
+      }
     }
-    // assign destination tile and add it to the pathing frontier
-    tiles[tiles.Length / 2].BecomeDestination();
-    searchFrontier.Enqueue(tiles[tiles.Length / 2]);
+    if (searchFrontier.Count == 0) {
+      return false;
+    }
 
     // assign paths for every tile
     while (searchFrontier.Count > 0) {
@@ -69,6 +82,34 @@ public class GameBoard : MonoBehaviour {
     // rotate tile arrows according to thier paths
     foreach (GameTile tile in tiles) {
       tile.ShowPath();
+    }
+
+    return true;
+  }
+
+  public void ToggleDestination (GameTile tile) {
+    if (tile.Content.Type == GameTileContentType.Destination) {
+      tile.Content = contentFactory.Get(GameTileContentType.Empty);
+      if (!FindPaths()) {
+        tile.Content = contentFactory.Get(GameTileContentType.Destination);
+        FindPaths();
+      }
+    } else if (tile.Content.Type == GameTileContentType.Empty) {
+      tile.Content = contentFactory.Get(GameTileContentType.Destination);
+      FindPaths();
+    }
+  }
+
+  public void ToggleWall (GameTile tile) {
+    if (tile.Content.Type == GameTileContentType.Wall) {
+      tile.Content = contentFactory.Get(GameTileContentType.Empty);
+      FindPaths();
+    } else if (tile.Content.Type == GameTileContentType.Empty) {
+      tile.Content = contentFactory.Get(GameTileContentType.Wall);
+      if (!FindPaths()) {
+        tile.Content = contentFactory.Get(GameTileContentType.Empty);
+        FindPaths();
+      }
     }
   }
 

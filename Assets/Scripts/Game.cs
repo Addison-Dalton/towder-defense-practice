@@ -12,19 +12,28 @@ public class Game : MonoBehaviour {
   Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
   void Awake () {
-    board.Initialize(boardSize);
+    board.Initialize(boardSize, tileContentFactory);
   }
 
   void Update () {
     if (Input.GetMouseButtonDown(0)) {
       HandleTouch();
+    } else if (Input.GetMouseButtonDown(1)) {
+      HandleAlternativeTouch();
     }
   }
 
   void HandleTouch () {
     GameTile tile = board.GetTile(TouchRay);
     if (tile != null) {
-      tile.Content = tileContentFactory.Get(GameTileContentType.Destination);
+      board.ToggleWall(tile);
+    }
+  }
+
+  void HandleAlternativeTouch () {
+    GameTile tile = board.GetTile(TouchRay);
+    if (tile != null) {
+      board.ToggleDestination(tile);
     }
   }
 

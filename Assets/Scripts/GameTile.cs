@@ -77,6 +77,6 @@ public void ShowPath () {
 
     neighbor.distance = distance + 1;
     neighbor.nextOnPath = this;
-    return neighbor;
+    return neighbor.Content.Type != GameTileContentType.Wall ? neighbor : null;
   }
 }
