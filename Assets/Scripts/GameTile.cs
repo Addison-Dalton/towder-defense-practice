@@ -7,6 +7,7 @@ public class GameTile : MonoBehaviour
   [SerializeField]
   Transform arrow = default;
   GameTile north, east, south, west, nextOnPath;
+  GameTileContent content;
   int distance;
 
   static Quaternion
@@ -19,6 +20,17 @@ public class GameTile : MonoBehaviour
   public bool HasPath => distance != int.MaxValue;
   public bool IsDestination => distance == 0;
   public bool IsAlternative { get; set; }
+  public GameTileContent Content {
+    get => content;
+    set {
+      Debug.Assert(value != null, "Null assigned to content");
+      if (content != null) {
+        content.Recycle();
+      }
+      content = value;
+      content.transform.localPosition = transform.localPosition;
+    }
+  }
   public GameTile GrowPathNorth () => GrowPathTo(north);
   public GameTile GrowPathSouth () => GrowPathTo(south);
   public GameTile GrowPathEast () => GrowPathTo(east);
