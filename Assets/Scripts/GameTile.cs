@@ -20,6 +20,8 @@ public class GameTile : MonoBehaviour
   public bool HasPath => distance != int.MaxValue;
   public bool IsDestination => distance == 0;
   public bool IsAlternative { get; set; }
+  public Direction PathDirection { get; private set; }
+  public Vector3 ExitPoint { get; private set; }
   public GameTileContent Content {
     get => content;
     set {
@@ -31,10 +33,12 @@ public class GameTile : MonoBehaviour
       content.transform.localPosition = transform.localPosition;
     }
   }
-  public GameTile GrowPathNorth () => GrowPathTo(north);
-  public GameTile GrowPathSouth () => GrowPathTo(south);
-  public GameTile GrowPathEast () => GrowPathTo(east);
-  public GameTile GrowPathWest () => GrowPathTo(west);
+  public GameTile GrowPathNorth () => GrowPathTo(north, Direction.South);
+  public GameTile GrowPathSouth () => GrowPathTo(south, Direction.North);
+  public GameTile GrowPathEast () => GrowPathTo(east, Direction.West);
+  public GameTile GrowPathWest () => GrowPathTo(west, Direction.East);
+
+  public GameTile NextTileOnPath => nextOnPath;
 
   public static void MakeEastWestNeighbors (GameTile east, GameTile west) {
     Debug.Assert(west.east == null && east.west == null, "Redefined EastWest neighbors");
@@ -73,14 +77,17 @@ public void ShowPath () {
   public void BecomeDestination () {
     distance = 0;
     nextOnPath = null;
+    ExitPoint = transform.localPosition;
   }
 
-  private GameTile GrowPathTo (GameTile neighbor) {
+  private GameTile GrowPathTo (GameTile neighbor, Direction direction) {
     Debug.Assert(HasPath, "No path");
     if (neighbor == null || neighbor.HasPath) return null;
 
     neighbor.distance = distance + 1;
     neighbor.nextOnPath = this;
+    neighbor.ExitPoint = (neighbor.transform.localPosition + transform.localPosition) * 0.5f;
+    neighbor.PathDirection = direction;
     return neighbor.Content.Type != GameTileContentType.Wall ? neighbor : null;
   }
 }
