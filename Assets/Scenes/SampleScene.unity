@@ -198,6 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ground: {fileID: 1171051221}
   tilePrefab: {fileID: 7352981397852188, guid: 5fbaa4f47143a014996148bf8ed2454d, type: 3}
+  gridTexture: {fileID: 2800000, guid: 0a2fe39fc0f63084a994db9358185529, type: 3}
 --- !u!4 &453704815
 Transform:
   m_ObjectHideFlags: 0
