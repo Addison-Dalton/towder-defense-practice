@@ -8,6 +8,11 @@ public class Game : MonoBehaviour {
   GameBoard board = default;
   [SerializeField]
   GameTileContentFactory tileContentFactory = default;
+  [SerializeField]
+  EnemyFactory enemyFactory = default;
+  [SerializeField, Range(0.1f, 10f)]
+  float spawnSpeed = 1f;
+  float spawnProgress;
 
   Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -17,6 +22,7 @@ public class Game : MonoBehaviour {
   }
 
   void Update () {
+    // controls
     if (Input.GetMouseButtonDown(0)) {
       HandleTouch();
     } else if (Input.GetMouseButtonDown(1)) {
@@ -29,6 +35,13 @@ public class Game : MonoBehaviour {
 
     if (Input.GetKeyDown(KeyCode.G)) {
       board.ShowGrid = !board.ShowGrid;
+    }
+
+    // enemy spawning
+    spawnProgress += spawnSpeed * Time.deltaTime;
+    while (spawnProgress >= 1f) {
+      spawnProgress -= 1f;
+      SpawnEnemy();
     }
   } 
 
@@ -48,6 +61,12 @@ public class Game : MonoBehaviour {
         board.ToggleSpawnPoint(tile);
       }
     }
+  }
+
+  void SpawnEnemy () {
+    GameTile spawnPoint = board.GetSpawnPoint(Random.Range(0, board.SpawnPointCount));
+    Enemy enemy = enemyFactory.Get();
+    enemy.SpawnOn(spawnPoint);
   }
 
   void onValidate () {
