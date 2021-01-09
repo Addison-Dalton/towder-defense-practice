@@ -8,7 +8,10 @@ public class GameBoard : MonoBehaviour {
 
   [SerializeField]
   GameTile tilePrefab = default;
+  [SerializeField]
+  Texture2D gridTexture = default;
   GameTile[] tiles;
+  bool showGrid, showPaths;
 
   Vector2Int size;
   Queue<GameTile> searchFrontier = new Queue<GameTile>();
@@ -40,6 +43,36 @@ public class GameBoard : MonoBehaviour {
       }
     }
     ToggleDestination(tiles[tiles.Length / 2]);
+  }
+
+  public bool ShowPaths {
+    get => showPaths;
+    set {
+      showPaths = value;
+      if (showPaths) {
+        foreach (GameTile tile in tiles) {
+          tile.ShowPath();
+        }
+      } else {
+        foreach (GameTile tile in tiles) {
+          tile.HidePath();
+        }
+      }
+    }
+  }
+
+  public bool ShowGrid {
+    get => showGrid;
+    set {
+      showGrid = value;
+      Material m = ground.GetComponent<MeshRenderer>().material;
+      if (showGrid) {
+        m.mainTexture = gridTexture;
+        m.SetTextureScale("_MainTex", size);
+      } else {
+        m.mainTexture = null;
+      }
+    }
   }
 
   private bool FindPaths () {
@@ -80,8 +113,10 @@ public class GameBoard : MonoBehaviour {
     }
 
     // rotate tile arrows according to thier paths
-    foreach (GameTile tile in tiles) {
-      tile.ShowPath();
+    if (showPaths) {
+      foreach (GameTile tile in tiles) {
+        tile.ShowPath();
+      }
     }
 
     return true;

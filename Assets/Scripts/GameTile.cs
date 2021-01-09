@@ -61,6 +61,10 @@ public void ShowPath () {
     westRotation;
 }
 
+  public void HidePath () {
+    arrow.gameObject.SetActive(false);
+  }
+
   public void ClearPath () {
     distance = int.MaxValue;
     nextOnPath = null;
