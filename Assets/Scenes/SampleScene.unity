@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 375331112}
   - component: {fileID: 375331111}
+  - component: {fileID: 375331113}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -154,7 +155,7 @@ MonoBehaviour:
   board: {fileID: 453704814}
   tileContentFactory: {fileID: 11400000, guid: af66c250319807f4b88524c67d22e6c0, type: 2}
   enemyFactory: {fileID: 11400000, guid: 063370c449bce3b4b818d4691360947e, type: 2}
-  spawnSpeed: 4.52
+  spawnSpeed: 0.57
 --- !u!4 &375331112
 Transform:
   m_ObjectHideFlags: 0
@@ -169,6 +170,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &375331113
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375331110}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 63ccf466082fd7e41ab91a11bbc122a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &453704813
 GameObject:
   m_ObjectHideFlags: 0

@@ -138,6 +138,101 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 1692153869907980519}
+  doesHop: 1
+  hopHeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.010242462
+      value: 0.136125
+      inSlope: -0.27332795
+      outSlope: -0.27332795
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.35017586
+      value: 0.043211706
+      inSlope: 1.0879717
+      outSlope: 1.0879717
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.097591385
+      outWeight: 0.17394105
+    - serializedVersion: 3
+      time: 0.6801289
+      value: 0.6387074
+      inSlope: -8.919618
+      outSlope: -8.919618
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.110048845
+    - serializedVersion: 3
+      time: 0.99227905
+      value: 0.136125
+      inSlope: 0.7100269
+      outSlope: 0.7100269
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  hopMovementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.30129546
+      value: -0.000098243356
+      inSlope: -0.08112432
+      outSlope: -0.08112432
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.88152665
+    - serializedVersion: 3
+      time: 0.4140413
+      value: 0.002546277
+      inSlope: 0.007471948
+      outSlope: 0.007471948
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.22453949
+    - serializedVersion: 3
+      time: 0.59996927
+      value: 1.0135411
+      inSlope: 9.673058
+      outSlope: -0.037710395
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.11029601
+      outWeight: 0.4204357
+    - serializedVersion: 3
+      time: 0.7966385
+      value: 1.0117949
+      inSlope: -0.008878754
+      outSlope: -0.008878754
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  hopHeightFloorPercent: 0.136
+  hopDelayRange:
+    min: 0.4620061
+    max: 2.4346504
+  hopHeightRange:
+    min: 0.41337386
+    max: 1.1276596
+  landingAccuracy:
+    min: -0.11519757
+    max: 0.15896657
 --- !u!1 &7772485125355422689
 GameObject:
   m_ObjectHideFlags: 0
